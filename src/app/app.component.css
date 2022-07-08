@@ -1,0 +1,12 @@
+p {
+  font-family: Lato;
+}
+
+#mydiv {
+  background-color: grey;
+  padding:5px;
+  min-width: 500px;
+  min-height: 500px;
+  width: 90%;
+  height: 90%;
+}

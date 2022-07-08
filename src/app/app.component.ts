@@ -34,16 +34,29 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.mydiv) {
       const ndiv = this.mydiv.nativeElement as HTMLDivElement;
 
-      // the "evil" event registration: causes globalZoneAwareCallback for 'touchmove' to become passive 
+      // the "evil" event registration: causes globalZoneAwareCallback for 'touchmove' to become passive
       ndiv.addEventListener(
         'touchmove',
         (ev) => {
-          console.log('move! ', ev);
+          console.log('move passive! ', ev);
           //ev.preventDefault();
           //ev.stopImmediatePropagation();
         },
-        {          
+        {
           passive: true,
+        }
+      );
+
+      // this one is configured non-passive. browser considers it active
+      ndiv.addEventListener(
+        'touchmove',
+        (ev) => {
+          console.log('move active! ', ev);
+          ev.preventDefault();
+          //ev.stopImmediatePropagation();
+        },
+        {
+          passive: false,
         }
       );
 
@@ -53,8 +66,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       dbh.on('drag.touchable', (ev, arg) => this.dragged(ev, arg));
       dbh.on('end', (ev) => console.log('end', ev));
       d3s.select(ndiv).call(dbh);
-
-      
     }
   }
 
